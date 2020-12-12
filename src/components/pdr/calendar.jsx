@@ -11,15 +11,21 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import { sizing } from '@material-ui/system';
 
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 //const uuid = require('uuid');
 
 const weekdays = ['Sun.', 'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.'];
-const cardStyle = { margin: 1 }
+const cardStyle = { margin:1 ,fontSize: "1px"  , color:"#000" }
+const gridStyle = { margin: 1 }
+const thisStyle = {}
 
-const Calendar = (props)=>{
-  const begining = new Date(2019, 10, 1);
+const MyCalendar = (props)=>{
+
+/*  const begining = new Date(2019, 10, 1);
 
   const [card,setCard] = useState({})
   const [count,setCount] = useState(0)
@@ -55,14 +61,16 @@ const Calendar = (props)=>{
       return counter
     }
   }
+*/
 
-  useEffect(() => setCount(countData))
+//  useEffect(() => setCount(countData))
   
 
 //  Array.apply(null, {length: begining.getDay()}).map(Number.call, Number).forEach((e)=>{
 //    calendar.push(<GridListTile key={uuid()}><Card /></GridListTile>);
 //  });
-  Array.apply(null, {length: 32}).map(Number.call, Number).forEach((i)=>{
+
+/*  Array.apply(null, {length: 32}).map(Number.call, Number).forEach((i)=>{
     const day = new Date(begining.getFullYear(), begining.getMonth(), 1+i);
     const dayKey = day.toLocaleDateString()
 
@@ -70,13 +78,11 @@ const Calendar = (props)=>{
       calendar.push(
         <GridListTile>
           <Card style={cardStyle}>
-            <CardContent>
-              <Typography onClick = {(e) => checkDate(e,setCard,i)}>{dayKey}</Typography>
+            <CardContent onClick = {(e) => checkDate(e,setCard,i)} style={cardStyle} >
+              {dayKey}
             </CardContent>
             <CardContent>
-            <Typography>
               {typeof card[dayKey] === "undefined" ? "" : card[dayKey].s }
-            </Typography>
             </CardContent>
             <CardActions>メモ</CardActions>
           </Card>
@@ -84,38 +90,17 @@ const Calendar = (props)=>{
       );
     }
   });
+*/
 
   return( 
-    <Paper>
-      <Card>
-        <CardContent>
-            現在の行動回数
-        </CardContent>
-        <CardContent>
-          {count}
-        </CardContent>
-      </Card>
-      <GridList cols={7} cellHeight='auto'>
-        {
-          weekdays.map((w)=>{
-            const styles = {};
-            if(w == 'Sun.'){styles.color = 'red'}
-            if(w == 'Sat.'){styles.color = 'blue'}
-            return (
-              <GridListTile key={w}>
-                <Card style={cardStyle}>
-                  <CardContent>
-                    <Typography style={styles}> {w} </Typography>
-                  </CardContent>
-                </Card>
-              </GridListTile>
-            )
-          })
-        }
-        {calendar}
-      </GridList>
-    </Paper>
+
+        <Calendar 
+          calendarType = "US"
+          maxDate = {new Date("2020","11","30")}
+          minDate = {new Date("2020","10","0")}
+        />
+  
   )
 }
 
-export default Calendar
+export default MyCalendar

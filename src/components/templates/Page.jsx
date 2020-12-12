@@ -25,13 +25,13 @@ const Page = (props) => {
         <div className={classes.toolbar} />
         <Grid container>
           <Grid item xs={1}></Grid>
-          <Grid item xs={9}>
+          <Grid item xs={10}>
             <Route exact path='/' component={Contents}/>
             <Route exact path='/pdr' component={Index}/>
             <Route exact path='/pdr/index2' component={Index2}/>
             <Route path='/pdr/new' component={New}/>
           </Grid>
-          <Grid item xs={2}></Grid>
+          <Grid item xs={1}></Grid>
         </Grid>
       </Router>
       <Footer/>
