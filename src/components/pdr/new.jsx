@@ -3,6 +3,10 @@ import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import Grid from '@material-ui/core/Grid'
 
 const headers = new Headers()
 headers.set("Content-Type","application/json")
@@ -44,10 +48,12 @@ const createCycle = async (prepare,doing,beginDate,endDate) => {
 
 
 const New = () => {
-  const [beginDate, setBeginDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [theme,setTheme] = useState("")
   const [prepare,setPrepare] = useState("")
   const [doing,setDoing] = useState("")
+  const [beginDate, setBeginDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [doTimes,setDoTimes] = useState(0)
 
   const calcDays = () => {
     if (beginDate != "" && endDate != "" && endDate >= beginDate) {
@@ -60,54 +66,68 @@ const New = () => {
   }
 
   return (
-    <div>
-      <List>
-        <ListItem>
-          <TextField onChange = {(e) => setPrepare(e.target.value)} id="prepare" label="目標・テーマを入力しましょう。" fullWidth = "True" margin = "normal" variant="outlined"/>
-        </ListItem>
-        <ListItem>
-          <TextField onChange = {(e) => setDoing(e.target.value)} id="doing" label="目標・テーマを実現するための具体的な行動を記入しましょう。" multiline rows={4} fullWidth = "True" margin = "normal" variant="outlined"/>
-        </ListItem>
-        <ListItem>
-          <TextField
-            id="beginDate"
-            label="開始日"
-            type="date"
-            defaultValue=""
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin = "dense"
-            variant="outlined"
-            onChange = {(e) => setBeginDate(e.target.value)}
-          />
-        </ListItem>
-        <ListItem>
-          <TextField
-            id="endDate"
-            label="終了日"
-            type="date"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            margin = "dense"
-            variant="outlined"
-            onChange = {(e) => setEndDate(e.target.value)}
+      <Grid container>
+        <Grid item xs= {6}>
+        <List>
+          <ListItem>
+            <TextField onChange = {(e) => setTheme(e.target.value)} id="theme" label="テーマを入力しましょう。" placeholder ="例．収入を増やす、ITスキル習得" fullWidth = "True" margin = "normal" variant="outlined"/>
+          </ListItem>
+          <ListItem>
+            <TextField onChange = {(e) => setPrepare(e.target.value)} id="prepare" label="テーマに基づく目標を設定しましょう。" placeholder ="例．アフィリエイトブログを作成する、Web技術の勉強をする。 " fullWidth = "True" margin = "normal" variant="outlined"/>
+          </ListItem>
+          <ListItem>
+            <TextField onChange = {(e) => setDoing(e.target.value)} id="doing" label="目標を実現するための具体的な行動を記入しましょう。" multiline rows={4} fullWidth = "True" margin = "normal" variant="outlined"/>
+          </ListItem>
+          <ListItem>
+            <TextField
+              id="beginDate"
+              label="開始日"
+              type="date"
+              defaultValue=""
+              InputLabelProps={{
+                shrink: true,
+              }}
+              margin = "dense"
+              variant="outlined"
+              onChange = {(e) => setBeginDate(e.target.value)}
             />
-        </ListItem>
-        <ListItem>
-          <TextField label="日数" margin = "dense" variant="outlined" value = {calcDays()}/>
-        </ListItem>
-        <ListItem>
-          <TextField label="目標回数" margin = "dense" variant="outlined"/>
-        </ListItem>
-        <ListItem>
-          <Button color="primary" onClick = {() => createCycle(prepare,doing,beginDate,endDate)}>
-            作成
-          </Button>
-        </ListItem>
-      </List>
-    </div>
+          </ListItem>
+          <ListItem>
+            <TextField
+              id="endDate"
+              label="終了日"
+              type="date"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              margin = "dense"
+              variant="outlined"
+              onChange = {(e) => setEndDate(e.target.value)}
+              />
+          </ListItem>
+          <ListItem>
+            <TextField label="日数" margin = "dense" variant="outlined" value = {calcDays()}/>
+          </ListItem>
+          <ListItem>
+            <TextField label="目標回数" margin = "dense" variant="outlined"/>
+          </ListItem>
+          <ListItem>
+            <Button color="primary" onClick = {() => createCycle(prepare,doing,beginDate,endDate)}>
+              作成
+            </Button>
+          </ListItem>
+        </List>
+      </Grid>
+      <Grid item xs={1}>
+      </Grid>
+      <Grid item xs={5}>
+        <Calendar 
+            calendarType = "US"
+            maxDate = {new Date("2020","11","30")}
+            minDate = {new Date("2020","10","0")}
+          />
+      </Grid>
+    </Grid>
   )
 }
 export default New
